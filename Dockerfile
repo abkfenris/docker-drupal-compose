@@ -20,7 +20,7 @@ COPY apache-drupal.conf /etc/apache2/sites-enabled/000-default.conf
 
 WORKDIR /app
 
-# Run in container with /app mounted as a volume to setup 
+# Run in container with /app mounted as a volume to setup
 # composer create-project drupal-composer/drupal-project:8.x-dev . --stability dev --no-interaction --no-install
 
 # Copy our composer create-project into /app

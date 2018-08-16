@@ -6,7 +6,7 @@ This uses the Docker Library PostgreSQL image as is, and rebuilds the Docker Lib
 
 ## Usage
 
-If setting up for the first time, see [Initial Configuration](#intial-configuration) down below.
+If setting up for the first time, see [Initial Configuration](#initial-configuration) down below.
 
 Otherwise use `make up` to start the server which you can then access at [localhost:8080](http://localhost:8080/).
 
@@ -64,8 +64,18 @@ Once the environment is up and rebuilt, then you can go into the Django admin an
 
 Updating modules or themes should also be done via `compose.json`
 
-If you're wondering why there is the `^` caret in front of the version number, see [Version](https://getcomposer.org/doc/articles/versions.md) in the Composer docs. The caret in this case will allow any version greater than or equal to 3.4 but less than 4.0 (so there shouldn't be any breaking changes).
+If you're wondering why there is the `^` caret in front of the version number, see [Version](https://getcomposer.org/doc/articles/versions.md) in the Composer docs. 
+The caret in this case will allow any version greater than or equal to 3.4 but less than 4.0 (so there shouldn't be any breaking changes).
 
+### Composer.lock
+
+To make sure that you're getting the exact same packages as were initially installed in this image move `composer.lock` into the `app` directory then `make up`. 
+
+If you wish to generate a new `composer.lock` file, you can build without it in the `app` directory, then use `docker cp` to copy it out of the container. 
+
+For example, if I use `docker ps` to find the container ID is `fea4777feeb4`, 
+I can use `docker cp fea:/app/composer.lock app/composer.lock` to copy the current 
+version to the `app` directory to guarentee that future builds will use the same libary versions.
 
 ## Initial Configuration
 
