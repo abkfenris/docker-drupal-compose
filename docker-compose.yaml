@@ -21,6 +21,7 @@ services:
     env_file:
     - ./docker-data/secret.env
     volumes:
+    # - ./app:/app
     # - ./docker-data/drupal/modules:/app/web/modules
     # - ./docker-data/drupal/profiles:/app/web/profiles
     # - ./docker-data/drupal/themes:/app/web/themes

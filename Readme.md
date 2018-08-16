@@ -104,3 +104,23 @@ When configuring Drupal, you'll use the username and password for the PostgreSQL
 You'll also need to go into the advanced database settings and set the host to `postgres`.
 
 After that, you can continue with the normal Drupal configuration.
+
+## How I built this
+
+I built this by adapting information from a few sources to make sure it is reproducable.
+
+- [CircleCI - Continuous Drupal](https://circleci.com/blog/continuous-drupal-p1-maintaining-with-docker-git-composer/)
+- [Drupal - Using Composer to Manage Drupal Site Dependencies](https://www.drupal.org/docs/develop/using-composer/using-composer-to-manage-drupal-site-dependencies)
+- [Drupal - Docker Development Environments](https://www.drupal.org/docs/develop/local-server-setup/docker-development-environments)
+- [Github - Composer Template](https://github.com/drupal-composer/drupal-project)
+
+To repeat, comment out everthing in the `Dockerfile` after `WORKDIR /app`.
+
+Then uncomment the `- ./app:/app` volume mount in `docker-compose.yaml` so that you can edit the `app` directory from the container.
+
+Next, you can run `docker compose drupal exec composer create-project drupal-composer/drupal-project:8.x-dev /app --stability dev --no-interaction --no-install` which will scaffold the app directory for us.
+
+Finally undo your commenting and uncommenting and follow it up with a `make up` and you should be up and running with the latest changes from the `drupal-composer` project.
+
+Note if you've added or changed any required modules or themes, this will cause them to get removed 
+from the `composer.json` file and your site will be unhappy if it was depending on them.
