@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:10.5-alpine
+    ports:
+    - "5432:5432"
+    env_file:
+    - ./docker-data/secret.env
+    environment:
+      PGDATA: /var/lib/postgresql/data/PGDATA
+    volumes:
+    - ./docker-data/postgres:/var/lib/postgresql/data
+
+  drupal:
+    build: .
+    ports:
+    - "8080:80"
+    depends_on:
+    -  postgres
+    env_file:
+    - ./docker-data/secret.env
+    volumes:
+    # - ./docker-data/drupal/modules:/app/web/modules
+    # - ./docker-data/drupal/profiles:/app/web/profiles
+    # - ./docker-data/drupal/themes:/app/web/themes
+    - ./docker-data/drupal/sites:/app/web/sites
